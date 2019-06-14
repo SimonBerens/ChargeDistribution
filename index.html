@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Physics</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="grid-container">
+
+    <div id="sketch-holder" class="grid-item">
+        <!-- canvas appears here -->
+    </div>
+
+    <div id="chart-holder" class="grid-item">
+        <canvas id="chart"></canvas>
+    </div>
+
+    <div id="controller" class="grid-item">
+
+        <div class="slider-container">
+            <label for="mass" class="slider-label">Mass (100Mkg)</label>
+            <input id="mass" class="slider" type="range" min="1" max="10" value="5" step="0.01">
+            <input id="mv" class="slider-value" type="text" value="5" readonly>
+        </div>
+        <div class="slider-container">
+            <label for="charge" class="slider-label">Charge (mC)</label>
+            <input id="charge" class="slider" type="range" min="1" max="10" value="5" step="0.01">
+            <input id="cv" class="slider-value" type="text" value="5" readonly>
+        </div>
+        <div class="slider-container">
+            <label for="density" class="slider-label">Charges per 1000 pixels</label>
+            <input id="density" class="slider" type="range" min="1" max="5" value="2.5" step="0.01">
+            <input id="dv" class="slider-value" type="text" value="2.5" readonly>
+        </div>
+        <div class="slider-container">
+            <label for="friction" class="slider-label"> Energy Conservation </label>
+            <input id="friction" class="slider" type="range" min="0" max="1" value="0.98" step="0.001">
+            <input id="fv" class="slider-value" type="text" value="0.98" readonly>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="lib/p5.min.js"></script>
+<script src="lib/p5.dom.js"></script>
+<script src="lib/buckets.min.js"></script>
+<script src="lib/chart.js"></script>
+<script src="sketch.js"></script>
+
+</body>
+</html>
