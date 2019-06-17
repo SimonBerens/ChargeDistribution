@@ -32,6 +32,14 @@ const C = {
 
 let boundColor;
 let insideColor, ir, ig, ib, ia;
+let presetShape = "";
+
+function setPresetDrawing(name) {
+    clearAll();
+    presetShape = name;
+    finishedDrawing = true;
+    loadPixels();
+}
 
 function setup() {
     const canvas = createCanvas(500, 500);
@@ -51,11 +59,47 @@ function setup() {
     strokeWeight(2);
     fill(255, 0);
     pixelDensity(1);
+
+    circle_button.onclick = e => {
+        setPresetDrawing("circle");
+    };
+    dogbone_button.onclick = e => {
+        setPresetDrawing("dogbone");
+    };
+    cctri_button.onclick = e => {
+        setPresetDrawing("cctri");
+
+    };
+}
+
+function drawPresetShape() {
+    if (presetShape === "circle") {
+        circle(width / 2, height / 2, min(width, height) / 1.5);
+    } else if (presetShape === "dogbone") {
+        const y = height / 2, d = min(width, height) / 4, r = d / 2;
+        const cxr = width / 2 + width / 4, cxl = width / 2 - width / 4, theta = PI / 1.2;
+        arc(cxr, height / 2, d, d, -theta, theta);
+        arc(cxl, height / 2, d, d, PI - theta, PI + theta);
+        line(cxr + r * Math.cos(-theta), y + r * Math.sin(-theta), cxl + r * Math.cos(PI + theta), y + r * Math.sin(PI + theta));
+        line(cxr + r * Math.cos(theta), y + r * Math.sin(theta), cxl + r * Math.cos(PI - theta), y + r * Math.sin(PI - theta));
+
+    } else if (presetShape === "cctri") {
+        const r = min(width, height) / 1.2;
+        const cx = width / 2, cy = height / 2;
+        const theta = 2 * PI / 3;
+        const cx0 = cx + r * Math.cos(PI / 2), cy0 = cy + r * Math.sin(PI / 2),
+            cx1 = cx + r * Math.cos(PI / 2 + theta), cy1 = cy + r * Math.sin(PI / 2 + theta),
+            cx2 = cx + r * Math.cos(PI / 2 + 2 * theta), cy2 = cy + r * Math.sin(PI / 2 + 2 * theta);
+        arc(cx0, cy0, r * Math.sqrt(3), r * Math.sqrt(3), 4 * PI / 3, 5 * PI / 3); // i hate geometry
+        arc(cx1, cy1, r * Math.sqrt(3), r * Math.sqrt(3), 0, PI / 3);
+        arc(cx2, cy2, r * Math.sqrt(3), r * Math.sqrt(3), 2 * PI / 3, PI);
+    }
 }
 
 function draw() {
     resetScreen();
     updateShape();
+    drawPresetShape();
     moveCharges();
     updateGraph();
 }
@@ -105,7 +149,7 @@ function updateGraph() {
         });
         const diff = frameCount - start;
         if (Math.floor(Math.random() * (diff) / 10) === 0) {
-        // if (false) {
+            // if (false) {
             chart.data.labels.push(diff);
             chart.data.datasets.forEach(dataset => {
                 dataset.data.push(potentialEnergy);
@@ -126,16 +170,21 @@ function updateShape() {
     }
 }
 
+function clearAll() {
+    points.clear();
+    charges.clear();
+    chart.data.labels = [0];
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data = [];
+    });
+    chart.update();
+    finishedDrawing = movingCharge = false;
+    presetShape = "";
+}
+
 function keyPressed() {
     if (key === 'c') {
-        points.clear();
-        charges.clear();
-        chart.data.labels = [0];
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data = [];
-        });
-        chart.update();
-        finishedDrawing = movingCharge = false;
+        clearAll();
     } else if (key === 'd' && !points.isEmpty() && !finishedDrawing) {
         finishedDrawing = true;
         loadPixels();
@@ -212,7 +261,7 @@ const chart = new Chart(ctx, {
     data: {
         labels: [0],
         datasets: [{
-            label: 'Electric Potential Energy',
+            label: 'Potential Energy (J)',
             backgroundColor: '#007bff',
             borderColor: 'black',
             data: []
@@ -226,13 +275,13 @@ const chart = new Chart(ctx, {
                 gridLines: {
                     display: false
                 },
-                scaleLabel : {
+                scaleLabel: {
                     display: true,
                     labelString: "Frame No."
                 }
             }],
-            yAxes : [{
-                scaleLabel : {
+            yAxes: [{
+                scaleLabel: {
                     display: true,
                     labelString: "Potential Energy (J)"
                 }
@@ -240,3 +289,9 @@ const chart = new Chart(ctx, {
         }
     }
 });
+
+// buttons
+
+const circle_button = document.getElementById('circle');
+const dogbone_button = document.getElementById('dogbone');
+const cctri_button = document.getElementById('cctri');
