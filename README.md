@@ -1,5 +1,5 @@
 # Surface Charge Distribution Simulator
-This simulation demonstrates how charge distributes on the surface of a conductor. The user draws the shape and adds charge to the conductor. These charges will be shown moving to their locations on the surface of the conductor such that the lowest possible total energy configuration is reached. 
+This simulation demonstrates how charge distributes on the surface of a conductor. The user draws the shape and adds charge to the conductor. These charges will be shown moving to their locations on the surface of the conductor such that the lowest possible total potential energy configuration is reached. 
 
 #### Using the Simulator:
 - Click and drag with your mouse to draw the shape you would like to simulate.
