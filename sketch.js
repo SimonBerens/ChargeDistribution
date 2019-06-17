@@ -23,9 +23,9 @@ let points = buckets.LinkedList();
 let charges = buckets.LinkedList();
 
 const C = {
-    M: 5, // for greater accuracy reduce mass and
-    Q: 0.005, // increase charge and
-    K: 8.99 * 2 * 10 ** 4, // reduce exponent
+    M: 7.5, // for greater accuracy reduce mass and
+    Q: 0.5, // increase charge and
+    K: 8.99 * 2, // reduce exponent
     RAND: 800,
     FRICTION: 0.98
 };
@@ -230,7 +230,7 @@ function pixelIsInsideColor(x, y) {
 let sliders = [
     ["mass", "M"],
     ["charge", "Q", v => {
-        return v / 1000
+        return v / 10
     }],
     ["density", "RAND", v => {
         return 1000 / v
