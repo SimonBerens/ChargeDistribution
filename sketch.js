@@ -126,7 +126,7 @@ function moveCharges() {
             c.pos.add(c.velocity);
             if (!onCanvas(c.pos.x, c.pos.y) || pixelIsInsideColor(Math.floor(c.pos.x), Math.floor(c.pos.y))) {
                 c.pos.sub(c.velocity);
-                c.velocity.rotate(Math.random() * Math.PI * 2).div(2); // magic :)
+                c.velocity.rotate(Math.random() * Math.PI * 2).div(1.25); // magic :)
             }
             circle(c.pos.x, c.pos.y, 10);
         });
